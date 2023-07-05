@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner_app/screens/history_screen.dart';
 import 'package:qr_code_scanner_app/screens/home_screen.dart';
 import 'package:qr_code_scanner_app/screens/onboadring_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';

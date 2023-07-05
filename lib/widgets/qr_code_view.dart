@@ -34,7 +34,7 @@ class _QRCodeViewState extends State<QRCodeView> {
     controller!.resumeCamera();
   }
 
-  void onQRViewCreated(QRViewController controller) {
+  void onQRViewCreated(QRViewController controller) async {
     setState(() {
       this.controller = controller;
     });
@@ -65,6 +65,9 @@ class _QRCodeViewState extends State<QRCodeView> {
 
   @override
   Widget build(BuildContext context) {
+    if (!mounted) {
+      controller?.pauseCamera();
+    }
     return Container(
       width: double.infinity,
       height: 400,

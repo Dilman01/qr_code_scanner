@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner_app/screens/history_screen.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
+      appBar: AppBar(backgroundColor: Colors.transparent),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -19,20 +21,46 @@ class HomeScreen extends StatelessWidget {
             width: double.infinity,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
               ),
               color: Colors.white,
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text('Scan QR Code'),
-                Text('Place qr code inside the frame'),
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => HistoryScreen(),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.history,
+                    color: Colors.orange,
+                    size: 35,
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Scan QR Code',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Place qr code inside the frame',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
                 SizedBox(
                   height: 35,
                 ),
-                // Image.asset('assets/images/qr_code1.jpg'),
+
                 QRCodeView(),
                 SizedBox(
                   height: 30,
@@ -48,32 +76,25 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-                Container(
-                  width: 250,
-                  height: 50,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Text(
-                    'Place the camera on the qr code',
-                    style: TextStyle(
-                      color: Colors.white,
+                SizedBox(
+                  width: double.infinity,
+                  child: Container(
+                    width: 250,
+                    height: 50,
+                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: const Text(
+                      'Place the camera on the qr code',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   width: 200,
-                //   height: 50,
-                //   child: ElevatedButton(
-                //     onPressed: () {},
-                //     style: ElevatedButton.styleFrom(
-                //       backgroundColor: Colors.orange,
-                //     ),
-                //     child: const Text('Place Camera Code'),
-                //   ),
-                // ),
               ],
             ),
           ),
