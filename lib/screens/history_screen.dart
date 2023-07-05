@@ -13,11 +13,21 @@ class HistoryScreen extends ConsumerStatefulWidget {
 }
 
 class _HistoryScreenState extends ConsumerState<HistoryScreen> {
+  late Future<void> _qrCodesFuture;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _qrCodesFuture = ref.read(qrCodesProvider.notifier).loadQRCodes();
+  }
+
   void remove(String code) {
-    final qrCodes = ref.watch(qrCodesProvider);
+    final qrCodes = ref.watch(qrCodesProvider.notifier);
 
     setState(() {
-      qrCodes.remove(code);
+      qrCodes.removeCode(code);
+      _qrCodesFuture = ref.read(qrCodesProvider.notifier).loadQRCodes();
     });
   }
 
@@ -73,14 +83,23 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: qrCodes.length,
-                    separatorBuilder: (context, index) => SizedBox(
-                      height: 20,
-                    ),
-                    itemBuilder: (context, index) =>
-                        QRCodeContainer(qrCodes[index], remove),
+                  child: FutureBuilder(
+                    future: _qrCodesFuture,
+                    builder: (context, snapshot) =>
+                        snapshot.connectionState == ConnectionState.waiting
+                            ? const Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            : QRCodeContainer(qrCodes, remove),
                   ),
+                  // child: ListView.separated(
+                  //   itemCount: qrCodes.length,
+                  //   separatorBuilder: (context, index) => SizedBox(
+                  //     height: 20,
+                  //   ),
+                  //   itemBuilder: (context, index) =>
+                  //       QRCodeContainer(qrCodes[index], remove),
+                  // ),
                 ),
               ],
             ),

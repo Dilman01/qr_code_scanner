@@ -21,6 +21,7 @@ class _QRCodeViewState extends State<QRCodeView> {
 
   @override
   void dispose() {
+    controller!.pauseCamera();
     controller?.dispose();
     super.dispose();
   }
@@ -45,9 +46,9 @@ class _QRCodeViewState extends State<QRCodeView> {
           code = barcode.code;
         });
 
-        debugPrint("=========$code");
         if (code != null) {
           await controller.pauseCamera();
+
           Navigator.push(
             context,
             MaterialPageRoute(
