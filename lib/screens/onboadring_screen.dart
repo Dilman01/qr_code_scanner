@@ -1,11 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner_app/screens/home_screen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import 'package:qr_code_scanner/main.dart';
+import 'package:qr_code_scanner_app/main.dart';
 import '../models/onboarding_content_model.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -116,7 +117,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => const MyHome(),
+                      builder: (context) => const HomeScreen(),
                     ),
                   );
                 }

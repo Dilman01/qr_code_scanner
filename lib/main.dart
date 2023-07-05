@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/screens/onboadring_screen.dart';
+import 'package:qr_code_scanner_app/screens/home_screen.dart';
+import 'package:qr_code_scanner_app/screens/onboadring_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -17,20 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: showHome ? MyHome() : const OnboardingScreen(),
-    );
-  }
-}
-
-class MyHome extends StatelessWidget {
-  const MyHome({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text('My Home'),
-      ),
+      theme: ThemeData(useMaterial3: true),
+      title: 'QR Code Scanner App',
+      home: showHome ? const HomeScreen() : const OnboardingScreen(),
     );
   }
 }
