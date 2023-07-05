@@ -1,19 +1,30 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/data/qr_code_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_code_scanner_app/provider/qr_codes_provider.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_container.dart';
 
-class HistoryScreen extends StatefulWidget {
+class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  State<HistoryScreen> createState() => _HistoryScreenState();
+  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
+class _HistoryScreenState extends ConsumerState<HistoryScreen> {
+  void remove(String code) {
+    final qrCodes = ref.watch(qrCodesProvider);
+
+    setState(() {
+      qrCodes.remove(code);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final qrCodes = ref.watch(qrCodesProvider);
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
@@ -68,7 +79,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       height: 20,
                     ),
                     itemBuilder: (context, index) =>
-                        QRCodeContainer(qrCodes[index]),
+                        QRCodeContainer(qrCodes[index], remove),
                   ),
                 ),
               ],

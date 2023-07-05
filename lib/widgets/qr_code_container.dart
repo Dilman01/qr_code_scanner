@@ -1,20 +1,17 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/data/qr_code_list.dart';
+import 'package:flutter/services.dart';
 
-class QRCodeContainer extends StatefulWidget {
-  const QRCodeContainer(this.code, {super.key});
+class QRCodeContainer extends StatelessWidget {
+  const QRCodeContainer(this.code, this.remove, {super.key});
 
   final String code;
+  final Function(String code) remove;
 
-  @override
-  State<QRCodeContainer> createState() => _QRCodeContainerState();
-}
-
-class _QRCodeContainerState extends State<QRCodeContainer> {
-  @override
   Widget build(BuildContext context) {
+    // final qrCodes = ref.read(qrCodesProvider);
+
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -36,7 +33,7 @@ class _QRCodeContainerState extends State<QRCodeContainer> {
             SizedBox(
               width: 150,
               child: Text(
-                widget.code,
+                code,
                 style: TextStyle(fontSize: 14),
                 overflow: TextOverflow.ellipsis,
                 softWrap: true,
@@ -46,7 +43,9 @@ class _QRCodeContainerState extends State<QRCodeContainer> {
               width: 16,
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: code));
+              },
               icon: Icon(
                 Icons.copy,
                 size: 20,
@@ -54,9 +53,7 @@ class _QRCodeContainerState extends State<QRCodeContainer> {
             ),
             IconButton(
               onPressed: () {
-                setState(() {
-                  qrCodes.remove(widget.code);
-                });
+                remove(code);
               },
               icon: Icon(
                 Icons.delete,
@@ -65,24 +62,6 @@ class _QRCodeContainerState extends State<QRCodeContainer> {
             ),
           ],
         ),
-        // child: ListTile(
-        //   leading: Icon(
-        //     Icons.qr_code_2_rounded,
-        //     size: 35,
-        //   ),
-        //   title: Text('QR Code Result Here'),
-        //   trailing: Container(
-        //     width: 100,
-
-        //     child: Row(
-        //       mainAxisSize: MainAxisSize.max,
-        //       mainAxisAlignment: MainAxisAlignment.end,
-        //       children: [
-        //
-        //       ],
-        //     ),
-        //   ),
-        // ),
       ),
     );
   }

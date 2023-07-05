@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:qr_code_scanner_app/data/qr_code_list.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qr_code_scanner_app/provider/qr_codes_provider.dart';
 import 'package:qr_code_scanner_app/screens/history_screen.dart';
 
-class QRCodeScreen extends StatelessWidget {
+class QRCodeScreen extends ConsumerStatefulWidget {
   const QRCodeScreen({
     super.key,
     required this.code,
@@ -12,7 +13,14 @@ class QRCodeScreen extends StatelessWidget {
   final String code;
 
   @override
+  ConsumerState<QRCodeScreen> createState() => _QRCodeScreenState();
+}
+
+class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
+  @override
   Widget build(BuildContext context) {
+    final qrCodes = ref.read(qrCodesProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(),
       body: SizedBox(
@@ -34,7 +42,7 @@ class QRCodeScreen extends StatelessWidget {
               height: 10,
             ),
             Text(
-              code.trim(),
+              widget.code.trim(),
               textAlign: TextAlign.center,
             ),
             const SizedBox(
@@ -48,7 +56,8 @@ class QRCodeScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  qrCodes.add(code);
+                  qrCodes.addQRCode(widget.code);
+                  // qrCodes.add(widget.code);
                   Navigator.of(context).pop();
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -77,7 +86,7 @@ class QRCodeScreen extends StatelessWidget {
               ),
               child: TextButton.icon(
                 onPressed: () {
-                  Clipboard.setData(ClipboardData(text: code));
+                  Clipboard.setData(ClipboardData(text: widget.code));
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: Colors.orange.shade600,

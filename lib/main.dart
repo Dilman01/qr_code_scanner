@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner_app/screens/history_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'package:qr_code_scanner_app/screens/home_screen.dart';
 import 'package:qr_code_scanner_app/screens/onboadring_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +9,11 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool('showHome') ?? false;
-  runApp(MyApp(showHome: showHome));
+  runApp(
+    ProviderScope(
+      child: MyApp(showHome: showHome),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
