@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_code_scanner_app/provider/qr_codes_provider.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_container.dart';
+import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
@@ -18,6 +19,8 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
   @override
   void initState() {
     super.initState();
+
+    controller!.pauseCamera();
 
     _qrCodesFuture = ref.read(qrCodesProvider.notifier).loadQRCodes();
   }
@@ -60,6 +63,7 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
               children: [
                 IconButton(
                   onPressed: () {
+                    controller!.resumeCamera();
                     Navigator.of(context).pop();
                   },
                   icon: Icon(

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:qr_code_scanner_app/screens/qr_code_screen.dart';
 
+QRViewController? controller;
+
 class QRCodeView extends StatefulWidget {
   const QRCodeView({super.key});
 
@@ -15,13 +17,16 @@ class QRCodeView extends StatefulWidget {
 
 class _QRCodeViewState extends State<QRCodeView> {
   final qrKey = GlobalKey();
-  QRViewController? controller;
 
   String? code;
+  // @override
+  // void initState() {
+  //   controller!.resumeCamera();
+  //   super.initState();
+  // }
 
   @override
   void dispose() {
-    controller!.pauseCamera();
     controller?.dispose();
     super.dispose();
   }
@@ -35,19 +40,19 @@ class _QRCodeViewState extends State<QRCodeView> {
     controller!.resumeCamera();
   }
 
-  void onQRViewCreated(QRViewController controller) async {
+  void onQRViewCreated(QRViewController control) async {
     setState(() {
-      this.controller = controller;
+      controller = control;
     });
 
-    controller.scannedDataStream.listen(
+    controller!.scannedDataStream.listen(
       (barcode) async {
         setState(() {
           code = barcode.code;
         });
 
         if (code != null) {
-          await controller.pauseCamera();
+          await controller!.pauseCamera();
 
           Navigator.push(
             context,
@@ -57,7 +62,7 @@ class _QRCodeViewState extends State<QRCodeView> {
               ),
             ),
           ).then(
-            (_) => controller.resumeCamera(),
+            (_) => controller!.resumeCamera(),
           );
         }
       },
@@ -66,9 +71,6 @@ class _QRCodeViewState extends State<QRCodeView> {
 
   @override
   Widget build(BuildContext context) {
-    if (!mounted) {
-      controller?.pauseCamera();
-    }
     return Container(
       width: double.infinity,
       height: 400,
