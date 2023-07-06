@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_code_scanner_app/provider/qr_codes_provider.dart';
 import 'package:qr_code_scanner_app/screens/history_screen.dart';
+import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
 
 class QRCodeScreen extends ConsumerStatefulWidget {
   const QRCodeScreen({
@@ -17,6 +18,12 @@ class QRCodeScreen extends ConsumerStatefulWidget {
 }
 
 class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
+  @override
+  void initState() {
+    controller!.pauseCamera();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final qrCodes = ref.read(qrCodesProvider.notifier);
@@ -57,11 +64,14 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
               child: TextButton(
                 onPressed: () {
                   qrCodes.addQRCode(widget.code);
-                  // qrCodes.add(widget.code);
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
+                  controller!.pauseCamera();
+
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                      builder: (context) => HistoryScreen(),
+                      builder: (ctx) {
+                        // controller!.pauseCamera();
+                        return const HistoryScreen();
+                      },
                     ),
                   );
                 },

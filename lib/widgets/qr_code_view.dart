@@ -19,15 +19,15 @@ class _QRCodeViewState extends State<QRCodeView> {
   final qrKey = GlobalKey();
 
   String? code;
-  // @override
-  // void initState() {
-  //   controller!.resumeCamera();
-  //   super.initState();
-  // }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   void dispose() {
-    controller?.dispose();
+    controller!.dispose();
     super.dispose();
   }
 
@@ -53,7 +53,6 @@ class _QRCodeViewState extends State<QRCodeView> {
 
         if (code != null) {
           await controller!.pauseCamera();
-
           Navigator.push(
             context,
             MaterialPageRoute(

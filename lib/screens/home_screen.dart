@@ -31,6 +31,7 @@ class HomeScreen extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
+                    controller!.pauseCamera();
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => HistoryScreen(),

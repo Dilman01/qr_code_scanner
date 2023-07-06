@@ -43,7 +43,7 @@ class QRCodesNotifier extends StateNotifier<List<String>> {
       where: 'code = ?',
       whereArgs: [code],
     );
-    // state = [...state];
+    
   }
 
   void addQRCode(String code) async {
