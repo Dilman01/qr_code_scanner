@@ -23,6 +23,7 @@ class QRCodeContainer extends StatelessWidget {
     }
   }
 
+  @override
   Widget build(BuildContext context) {
     // final qrCodes = ref.read(qrCodesProvider);
 
