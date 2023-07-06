@@ -23,20 +23,17 @@ class _HistoryScreenState extends ConsumerState<HistoryScreen> {
     _qrCodesFuture = ref.read(qrCodesProvider.notifier).loadQRCodes();
   }
 
-  void remove(String code) {
+  void remove(String id) {
     final qrCodes = ref.watch(qrCodesProvider.notifier);
 
     setState(() {
-      qrCodes.removeCode(code);
+      qrCodes.removeQRCode(id);
       _qrCodesFuture = ref.read(qrCodesProvider.notifier).loadQRCodes();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      controller!.pauseCamera();
-    });
     final qrCodes = ref.watch(qrCodesProvider);
 
     return WillPopScope(

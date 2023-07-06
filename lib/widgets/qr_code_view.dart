@@ -21,11 +21,6 @@ class _QRCodeViewState extends State<QRCodeView> {
   String? code;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   void dispose() {
     controller!.dispose();
     super.dispose();
@@ -47,9 +42,7 @@ class _QRCodeViewState extends State<QRCodeView> {
 
     controller!.scannedDataStream.listen(
       (barcode) async {
-        setState(() {
-          code = barcode.code;
-        });
+        code = barcode.code;
 
         if (code != null) {
           await controller!.stopCamera();

@@ -61,19 +61,10 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 35,
                 ),
-
                 QRCodeView(),
                 SizedBox(
                   height: 30,
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Icon(Icons.photo),
-                //     Icon(Icons.keyboard),
-                //     Icon(Icons.flash_on),
-                //   ],
-                // ),
                 SizedBox(
                   height: 30,
                 ),

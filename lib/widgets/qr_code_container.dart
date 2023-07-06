@@ -2,13 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:qr_code_scanner_app/models/qr_code_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class QRCodeContainer extends StatelessWidget {
   const QRCodeContainer(this.qrCodes, this.remove, {super.key});
 
-  final List<String> qrCodes;
-  final Function(String code) remove;
+  final List<QRCodeModel> qrCodes;
+  final Function(String id) remove;
 
   Future<void> _launchURL(String url) async {
     final uri = Uri.parse(url);
@@ -34,7 +35,7 @@ class QRCodeContainer extends StatelessWidget {
       ),
       itemBuilder: (context, index) => GestureDetector(
         onTap: () {
-          _launchURL(qrCodes[index]);
+          _launchURL(qrCodes[index].code);
         },
         child: Container(
           height: 80,
@@ -55,7 +56,7 @@ class QRCodeContainer extends StatelessWidget {
               SizedBox(
                 width: 150,
                 child: Text(
-                  qrCodes[index],
+                  qrCodes[index].code,
                   style: TextStyle(fontSize: 14),
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
@@ -66,7 +67,7 @@ class QRCodeContainer extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  Clipboard.setData(ClipboardData(text: qrCodes[index]));
+                  Clipboard.setData(ClipboardData(text: qrCodes[index].code));
                 },
                 icon: Icon(
                   Icons.copy,
@@ -75,7 +76,8 @@ class QRCodeContainer extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () {
-                  remove(qrCodes[index]);
+                  debugPrint("============" + qrCodes[index].id);
+                  remove(qrCodes[index].id);
                 },
                 icon: Icon(
                   Icons.delete,

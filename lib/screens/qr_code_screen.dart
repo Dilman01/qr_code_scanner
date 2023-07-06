@@ -19,12 +19,6 @@ class QRCodeScreen extends ConsumerStatefulWidget {
 
 class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
   @override
-  void initState() {
-    controller!.pauseCamera();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final qrCodes = ref.read(qrCodesProvider.notifier);
 
@@ -69,12 +63,10 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
                 child: TextButton(
                   onPressed: () {
                     qrCodes.addQRCode(widget.code);
-                    controller!.pauseCamera();
 
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                         builder: (ctx) {
-                          // controller!.pauseCamera();
                           return const HistoryScreen();
                         },
                       ),
