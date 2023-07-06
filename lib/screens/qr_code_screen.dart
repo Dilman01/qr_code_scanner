@@ -28,84 +28,90 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
   Widget build(BuildContext context) {
     final qrCodes = ref.read(qrCodesProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(),
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text(
-              'Result:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+    return WillPopScope(
+      onWillPop: () async {
+        controller!.resumeCamera();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text(
+                'Result:',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Text(
-              widget.code.trim(),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Container(
-              width: 200,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
+              const SizedBox(
+                height: 10,
               ),
-              child: TextButton(
-                onPressed: () {
-                  qrCodes.addQRCode(widget.code);
-                  controller!.pauseCamera();
+              Text(
+                widget.code.trim(),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              Container(
+                width: 200,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    qrCodes.addQRCode(widget.code);
+                    controller!.pauseCamera();
 
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (ctx) {
-                        // controller!.pauseCamera();
-                        return const HistoryScreen();
-                      },
-                    ),
-                  );
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.orange.shade600,
-                  foregroundColor: Colors.orange.shade50,
-                ),
-                child: const Text('Save'),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 200,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                border: Border.all(
-                  color: Colors.orange.shade600,
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (ctx) {
+                          // controller!.pauseCamera();
+                          return const HistoryScreen();
+                        },
+                      ),
+                    );
+                  },
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.orange.shade600,
+                    foregroundColor: Colors.orange.shade50,
+                  ),
+                  child: const Text('Save'),
                 ),
               ),
-              child: TextButton.icon(
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: widget.code));
-                },
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.orange.shade600,
-                ),
-                icon: const Icon(Icons.copy),
-                label: const Text('Copy'),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-          ],
+              Container(
+                width: 200,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(
+                    color: Colors.orange.shade600,
+                  ),
+                ),
+                child: TextButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: widget.code));
+                  },
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.orange.shade600,
+                  ),
+                  icon: const Icon(Icons.copy),
+                  label: const Text('Copy'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -2,12 +2,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class QRCodeContainer extends StatelessWidget {
   const QRCodeContainer(this.qrCodes, this.remove, {super.key});
 
   final List<String> qrCodes;
   final Function(String code) remove;
+
+  Future<void> _launchURL(String url) async {
+    final uri = Uri.parse(url);
+
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   Widget build(BuildContext context) {
     // final qrCodes = ref.read(qrCodesProvider);
@@ -18,7 +32,9 @@ class QRCodeContainer extends StatelessWidget {
         height: 20,
       ),
       itemBuilder: (context, index) => GestureDetector(
-        onTap: () {},
+        onTap: () {
+          _launchURL(qrCodes[index]);
+        },
         child: Container(
           height: 80,
           width: double.infinity,

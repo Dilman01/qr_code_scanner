@@ -52,7 +52,7 @@ class _QRCodeViewState extends State<QRCodeView> {
         });
 
         if (code != null) {
-          await controller!.pauseCamera();
+          await controller!.stopCamera();
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -60,8 +60,6 @@ class _QRCodeViewState extends State<QRCodeView> {
                 code: code!,
               ),
             ),
-          ).then(
-            (_) => controller!.resumeCamera(),
           );
         }
       },
