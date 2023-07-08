@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner_app/bloc/qr_code_bloc.dart';
-import 'package:qr_code_scanner_app/widgets/qr_code_container.dart';
+import 'package:qr_code_scanner_app/widgets/qr_code_list.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
 
 class HistoryScreen extends StatefulWidget {
@@ -71,7 +71,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     child: BlocBuilder<QRCodeBloc, QRCodesState>(
                       builder: (context, state) {
                         if (state.qrCodes.isNotEmpty) {
-                          return QRCodeContainer(
+                          return QRCodeList(
                             state.qrCodes.reversed.toList(),
                           );
                         } else if (state is QRCodesInitial) {

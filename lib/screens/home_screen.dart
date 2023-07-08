@@ -46,6 +46,21 @@ class HomeScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Text(
                     'Scan QR Code',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Place the QR Code in the frame.',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -53,26 +68,6 @@ class HomeScreen extends StatelessWidget {
                   height: 15,
                 ),
                 const QRCodeView(),
-                SizedBox(
-                  width: double.infinity,
-                  child: Container(
-                    width: 250,
-                    height: 50,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Text(
-                      'Place the camera on the qr code',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
