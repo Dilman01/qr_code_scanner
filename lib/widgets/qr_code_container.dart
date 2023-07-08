@@ -1,15 +1,15 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_code_scanner_app/models/qr_code_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class QRCodeContainer extends StatelessWidget {
-  const QRCodeContainer(this.qrCodes, this.remove, {super.key});
+import '../bloc/qr_code_bloc.dart';
 
-  final List<QRCodeModel> qrCodes;
-  final Function(String id) remove;
+class QRCodeContainer extends StatelessWidget {
+  const QRCodeContainer(this.qrCodes, {super.key});
+
+  final List<QRCode> qrCodes;
 
   Future<void> _launchURL(String url) async {
     final uri = Uri.parse(url);
@@ -26,11 +26,9 @@ class QRCodeContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final qrCodes = ref.read(qrCodesProvider);
-
     return ListView.separated(
       itemCount: qrCodes.length,
-      separatorBuilder: (context, index) => SizedBox(
+      separatorBuilder: (context, index) => const SizedBox(
         height: 20,
       ),
       itemBuilder: (context, index) => GestureDetector(
@@ -49,7 +47,7 @@ class QRCodeContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.qr_code_2_rounded,
                 size: 35,
               ),
@@ -57,7 +55,7 @@ class QRCodeContainer extends StatelessWidget {
                 width: 150,
                 child: Text(
                   qrCodes[index].code,
-                  style: TextStyle(fontSize: 14),
+                  style: const TextStyle(fontSize: 14),
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
                 ),
@@ -69,17 +67,18 @@ class QRCodeContainer extends StatelessWidget {
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: qrCodes[index].code));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.copy,
                   size: 20,
                 ),
               ),
               IconButton(
                 onPressed: () {
-                  debugPrint("============" + qrCodes[index].id);
-                  remove(qrCodes[index].id);
+                  context
+                      .read<QRCodeBloc>()
+                      .add(DeleteQRCode(qrCode: qrCodes[index]));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.delete,
                   size: 20,
                 ),

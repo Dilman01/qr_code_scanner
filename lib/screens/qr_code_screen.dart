@@ -1,27 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qr_code_scanner_app/provider/qr_codes_provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/bloc/qr_code_bloc.dart';
+import 'package:qr_code_scanner_app/models/qr_code_model.dart';
 import 'package:qr_code_scanner_app/screens/history_screen.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
 
-class QRCodeScreen extends ConsumerStatefulWidget {
+class QRCodeScreen extends StatefulWidget {
   const QRCodeScreen({
     super.key,
     required this.code,
   });
 
-  final String code;
+  final QRCode code;
 
   @override
-  ConsumerState<QRCodeScreen> createState() => _QRCodeScreenState();
+  State<QRCodeScreen> createState() => _QRCodeScreenState();
 }
 
-class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
+class _QRCodeScreenState extends State<QRCodeScreen> {
   @override
   Widget build(BuildContext context) {
-    final qrCodes = ref.read(qrCodesProvider.notifier);
-
     return WillPopScope(
       onWillPop: () async {
         controller!.resumeCamera();
@@ -48,7 +47,7 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
                 height: 10,
               ),
               Text(
-                widget.code.trim(),
+                widget.code.code.trim(),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
@@ -62,7 +61,9 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
                 ),
                 child: TextButton(
                   onPressed: () {
-                    qrCodes.addQRCode(widget.code);
+                    context
+                        .read<QRCodeBloc>()
+                        .add(AddQRCode(qrCode: widget.code));
 
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
@@ -93,7 +94,7 @@ class _QRCodeScreenState extends ConsumerState<QRCodeScreen> {
                 ),
                 child: TextButton.icon(
                   onPressed: () {
-                    Clipboard.setData(ClipboardData(text: widget.code));
+                    Clipboard.setData(ClipboardData(text: widget.code.code));
                   },
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.orange.shade600,

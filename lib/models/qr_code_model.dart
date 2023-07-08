@@ -2,8 +2,8 @@ import 'package:uuid/uuid.dart';
 
 const uuid = Uuid();
 
-class QRCodeModel {
-  QRCodeModel({
+class QRCode {
+  QRCode({
     required this.code,
     String? id,
   }) : id = id ?? uuid.v4();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_code_scanner_app/bloc/qr_code_bloc.dart';
 
 import 'package:qr_code_scanner_app/screens/home_screen.dart';
 import 'package:qr_code_scanner_app/screens/onboadring_screen.dart';
@@ -9,10 +10,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final showHome = prefs.getBool('showHome') ?? false;
+
   runApp(
-    ProviderScope(
-      child: MyApp(showHome: showHome),
-    ),
+    MyApp(showHome: showHome),
   );
 }
 
@@ -23,10 +23,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(useMaterial3: true),
-      title: 'QR Code Scanner App',
-      home: showHome ? const HomeScreen() : const OnboardingScreen(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => QRCodeBloc()..add(LoadQRCodes()),
+        )
+      ],
+      child: MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        title: 'QR Code Scanner App',
+        home: showHome ? const HomeScreen() : const OnboardingScreen(),
+      ),
     );
   }
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner_app/screens/history_screen.dart';
 import 'package:qr_code_scanner_app/widgets/qr_code_view.dart';
@@ -16,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
             height: 700,
             width: double.infinity,
             decoration: const BoxDecoration(
@@ -34,46 +32,34 @@ class HomeScreen extends StatelessWidget {
                     controller!.pauseCamera();
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => HistoryScreen(),
+                        builder: (context) => const HistoryScreen(),
                       ),
                     );
                   },
-                  icon: Icon(
+                  icon: const Icon(
                     Icons.history,
                     color: Colors.orange,
-                    size: 35,
+                    size: 40,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Scan QR Code',
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Text(
-                    'Place qr code inside the frame',
-                    textAlign: TextAlign.center,
-                  ),
+                const SizedBox(
+                  height: 15,
                 ),
-                SizedBox(
-                  height: 35,
-                ),
-                QRCodeView(),
-                SizedBox(
-                  height: 30,
-                ),
-                SizedBox(
-                  height: 30,
-                ),
+                const QRCodeView(),
                 SizedBox(
                   width: double.infinity,
                   child: Container(
                     width: 250,
                     height: 50,
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
                       color: Colors.orange,
