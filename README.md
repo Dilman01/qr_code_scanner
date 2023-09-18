@@ -17,7 +17,7 @@ samples, guidance on mobile development, and a full API reference.
 
 
 ## Screenshots
-|           Home Screen            |              Resutl              |
+|           Home Screen            |              Result              |
 | :------------------------------: | :------------------------------: |
 | ![](screenshots/screenshot1.jpg) | ![](screenshots/screenshot2.jpg) |
 
