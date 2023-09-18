@@ -23,13 +23,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => QRCodeBloc()..add(LoadQRCodes()),
-        )
-      ],
+    return BlocProvider(
+      create: (_) => QRCodeBloc()..add(LoadedQRCodes()),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(useMaterial3: true),
         title: 'QR Code Scanner App',
         home: showHome ? const HomeScreen() : const OnboardingScreen(),

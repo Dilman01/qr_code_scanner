@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,10 +77,12 @@ class QRCodeList extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    await Future.delayed(const Duration(milliseconds: 400));
+
                     context
                         .read<QRCodeBloc>()
-                        .add(DeleteQRCode(qrCode: qrCodes[index]));
+                        .add(DeletedQRCode(qrCode: qrCodes[index]));
                   },
                   icon: const Icon(
                     Icons.delete,

@@ -8,10 +8,10 @@ class AddQRCode extends QRCodeEvent {
   AddQRCode({required this.qrCode});
 }
 
-class LoadQRCodes extends QRCodeEvent {}
+class LoadedQRCodes extends QRCodeEvent {}
 
-class DeleteQRCode extends QRCodeEvent {
+class DeletedQRCode extends QRCodeEvent {
   final QRCode qrCode;
 
-  DeleteQRCode({required this.qrCode});
+  DeletedQRCode({required this.qrCode});
 }

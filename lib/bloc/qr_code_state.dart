@@ -10,6 +10,6 @@ class QRCodesInitial extends QRCodesState {
   QRCodesInitial({required List<QRCode> qrCodes}) : super(qrCodes: qrCodes);
 }
 
-class QRCodesLoaded extends QRCodesState {
-  QRCodesLoaded({required List<QRCode> qrCodes}) : super(qrCodes: qrCodes);
+class QRCodesLoad extends QRCodesState {
+  QRCodesLoad({required List<QRCode> qrCodes}) : super(qrCodes: qrCodes);
 }

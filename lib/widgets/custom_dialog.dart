@@ -66,6 +66,7 @@ class _CustomDialogState extends State<CustomDialog> {
                     margin: const EdgeInsets.only(left: 10),
                     child: Text(
                       widget.code!,
+                      style: const TextStyle(fontSize: 13),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -97,7 +98,7 @@ class _CustomDialogState extends State<CustomDialog> {
                         foregroundColor: Colors.orange.shade600,
                         fixedSize: const Size(120, 50),
                         side: const BorderSide(color: Colors.orange)),
-                    child: const Text('Cancel'),
+                    child: const Text('Close'),
                   ),
                   const SizedBox(
                     width: 15,
